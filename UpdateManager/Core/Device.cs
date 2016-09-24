@@ -7,7 +7,7 @@ namespace UpdateManager.Core
         public string deviceId { get; set; }
         public List<string> hardwareId { get; set; }
         public string status { get; set; }
-        public string statusCode { get; set; }
+        public byte statusCode { get; set; }
     }
 
     class OSinfo
