@@ -68,7 +68,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Converter.cs" />
-    <Compile Include="Core\Device.cs" />
+    <Compile Include="Core\WorkWithDriver.cs" />
+    <Compile Include="Entity\Driver.cs" />
+    <Compile Include="Entity\InfoDrivers.cs" />
+    <Compile Include="Entity\Device.cs" />
+    <Compile Include="Entity\OSinfo.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -101,6 +105,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
