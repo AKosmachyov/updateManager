@@ -5,12 +5,15 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web.Script.Serialization;
 using UpdateManager.Entity;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace UpdateManager.Core
 {
     public  static class WorkWithDriver
     {
-        public static void getDriversForUpdate()
+        public static List<Driver> drivers = new List<Driver>();
+        public static void getDriversForUpdate(DataGrid dataGrid)
         {
             InfoDrivers data = new InfoDrivers();            
 
@@ -26,8 +29,7 @@ namespace UpdateManager.Core
             var serializer = new JavaScriptSerializer();
             serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
             dynamic obj = serializer.Deserialize(new StreamReader(stream1).ReadToEnd(), typeof(object));
-
-            var drivers = new List<Driver>();
+                        
             foreach (var val in obj.data)
             {
                 if (val.drivers.Count > 0)
@@ -40,6 +42,7 @@ namespace UpdateManager.Core
                     drivers.Add(temp);
                 }
             }
+            dataGrid.ItemsSource = drivers;
         }
         
         public static string PostMethod(string postedData, string postUrl)
@@ -69,5 +72,16 @@ namespace UpdateManager.Core
             }
             return "";
         }
+
+        
+        public static void downloadDrivers()
+        {
+            using (WebClient myWebClient = new WebClient())
+            {
+                var firstPart = "http://download.drp.su/driverpacks/repack";
+                
+                myWebClient.DownloadFile(firstPart + drivers.First().link, "1.zip");
+            }
+        }       
     }
 }

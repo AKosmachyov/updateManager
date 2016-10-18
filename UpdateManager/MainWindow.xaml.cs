@@ -23,12 +23,13 @@ namespace UpdateManager
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
-        {
-            WorkWithDriver.getDriversForUpdate();
+        {            
+            WorkWithDriver.getDriversForUpdate(dataGrid);
         }
+
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
+            WorkWithDriver.downloadDrivers(dataGrid);            
         }
-    }
+    }    
 }
