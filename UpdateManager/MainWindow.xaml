@@ -11,8 +11,14 @@
         <Button x:Name="button1" Content="Обновить" HorizontalAlignment="Left" Margin="209,10,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
         <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Height="238" Width="497" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="тык" Width="30" Binding="{x:Null}" ClipboardContentBinding="{x:Null}"/>
-                <DataGridTextColumn Header="Драйвера" Binding="{Binding Path=device}" Width="*" ClipboardContentBinding="{x:Null}"/>
+                <DataGridTemplateColumn MinWidth="20" Width="Auto" Header="тык">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Драйвера" Binding="{Binding Path=device}" Width="*" ClipboardContentBinding="{x:Null}" CanUserSort="False" IsReadOnly="True"/>
             </DataGrid.Columns>            
         </DataGrid>
     </Grid>
