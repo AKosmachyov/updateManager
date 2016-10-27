@@ -29,7 +29,7 @@ namespace UpdateManager
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            WorkWithDriver.downloadDrivers(dataGrid);            
+            WorkWithDriver.downloadDrivers();            
         }
     }    
 }

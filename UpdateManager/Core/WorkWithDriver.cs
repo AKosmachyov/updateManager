@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
@@ -37,8 +38,12 @@ namespace UpdateManager.Core
                     var temp = new Driver();
                     temp.device = val.drivers[0].name;
                     temp.link = val.drivers[0].link;
-                    temp.date = val.drivers[0].date;
+                    var arrTime = (val.drivers[0].date).Split('-');
+                    temp.date = new DateTime(Convert.ToInt32(arrTime[0]), Convert.ToInt32(arrTime[1]), Convert.ToInt32(arrTime[2]));
                     temp.version = val.drivers[0].version;
+                    temp.directory = val.drivers[0].directory;
+                    temp.inf = val.drivers[0].inf;
+
                     drivers.Add(temp);
                 }
             }
