@@ -21,7 +21,7 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding isCheck, UpdateSourceTrigger=PropertyChanged}">
                                 <CheckBox.LayoutTransform>
                                     <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                                 </CheckBox.LayoutTransform>
@@ -29,7 +29,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Драйвера" Binding="{Binding Path=device}" Width="*" CanUserSort="False" IsReadOnly="True">
+                <DataGridTextColumn Header="Драйвера" Binding="{Binding driver.device}" Width="*" CanUserSort="False" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center" />
