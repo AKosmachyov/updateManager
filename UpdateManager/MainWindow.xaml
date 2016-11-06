@@ -5,15 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpdateManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="700">
     <Grid>
         <Button x:Name="button" Content="Проверить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click" Margin="10,10,0,0"/>
         <Button x:Name="button1" Content="Обновить" HorizontalAlignment="Left" Margin="209,10,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
-        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Height="238" Width="497" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,54,10,10" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="25" CanUserResizeColumns="False" CanUserResizeRows="False" ForceCursor="True" IsHitTestVisible="True" GridLinesVisibility="None">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="тык" Width="30" Binding="{x:Null}" ClipboardContentBinding="{x:Null}"/>
-                <DataGridTextColumn Header="Драйвера" Binding="{Binding Path=device}" Width="*" ClipboardContentBinding="{x:Null}"/>
-            </DataGrid.Columns>            
+                <DataGridTemplateColumn Width="30">
+                    <DataGridTemplateColumn.Header>
+                        <CheckBox Name="chkSelectAll">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding isCheck, UpdateSourceTrigger=PropertyChanged}">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Драйвера" Binding="{Binding driver.device}" Width="*" CanUserSort="False" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>

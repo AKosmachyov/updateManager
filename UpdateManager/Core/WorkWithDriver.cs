@@ -8,12 +8,13 @@ using System.Web.Script.Serialization;
 using UpdateManager.Entity;
 using System.Linq;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace UpdateManager.Core
 {
     public  static class WorkWithDriver
     {
-        public static List<Driver> drivers = new List<Driver>();
+        public static List<DataGridEntity> dataGridEntity = new List<DataGridEntity>();
         public static void getDriversForUpdate(DataGrid dataGrid)
         {
             InfoDrivers data = new InfoDrivers();            
@@ -44,10 +45,10 @@ namespace UpdateManager.Core
                     temp.directory = val.drivers[0].directory;
                     temp.inf = val.drivers[0].inf;
 
-                    drivers.Add(temp);
+                    dataGridEntity.Add(new DataGridEntity(temp));
                 }
             }
-            dataGrid.ItemsSource = drivers;
+            dataGrid.ItemsSource = dataGridEntity;
         }
         
         public static string PostMethod(string postedData, string postUrl)
@@ -81,12 +82,24 @@ namespace UpdateManager.Core
         
         public static void downloadDrivers()
         {
-            using (WebClient myWebClient = new WebClient())
+            var firstPartLink = "http://download.drp.su/driverpacks/repack";
+            var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
+            Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip")));
+        }
+
+        static async Task downloaderAsync(string link, string name)
+        {
+            try
             {
-                var firstPart = "http://download.drp.su/driverpacks/repack";
-                
-                myWebClient.DownloadFile(firstPart + drivers.First().link, "1.zip");
+                using (WebClient webClient = new WebClient())
+                {
+                    await webClient.DownloadFileTaskAsync(new Uri(link), name);
+                }
             }
-        }       
+            catch (Exception)
+            {
+                throw new Exception("Ошибка скачивания");
+            }
+        }        
     }
 }

@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="Core\Converter.cs" />
     <Compile Include="Core\WorkWithDriver.cs" />
+    <Compile Include="Entity\DataGridEntity.cs" />
     <Compile Include="Entity\Driver.cs" />
     <Compile Include="Entity\InfoDrivers.cs" />
     <Compile Include="Entity\Device.cs" />
