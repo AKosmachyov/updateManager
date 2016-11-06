@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using UpdateManager.Entity;
 using System.Linq;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace UpdateManager.Core
 {
@@ -82,12 +83,23 @@ namespace UpdateManager.Core
         public static void downloadDrivers()
         {
             var firstPartLink = "http://download.drp.su/driverpacks/repack";
-            //dataGridEntity.Where(x => x.isCheck == true).ToList();
+            var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
+            Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip")));
+        }
 
-            using (WebClient myWebClient = new WebClient())
+        static async Task downloaderAsync(string link, string name)
+        {
+            try
             {
-                //myWebClient.DownloadFile(firstPartLink + dataGridEntity..link, "1.zip");
+                using (WebClient webClient = new WebClient())
+                {
+                    await webClient.DownloadFileTaskAsync(new Uri(link), name);
+                }
             }
-        }       
+            catch (Exception)
+            {
+                throw new Exception("Ошибка скачивания");
+            }
+        }        
     }
 }

@@ -29,7 +29,14 @@ namespace UpdateManager
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            WorkWithDriver.downloadDrivers();            
+            try
+            {
+                WorkWithDriver.downloadDrivers();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }    
 }
