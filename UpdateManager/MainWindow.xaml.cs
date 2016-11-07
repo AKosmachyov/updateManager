@@ -29,14 +29,10 @@ namespace UpdateManager
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                WorkWithDriver.downloadDrivers();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            var window = new DownloadWindow(WorkWithDriver.getListWithDriversForDownload());
+            this.Hide();
+            window.ShowDialog();
+            this.Show();
         }
     }    
 }

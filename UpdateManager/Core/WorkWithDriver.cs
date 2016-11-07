@@ -79,11 +79,15 @@ namespace UpdateManager.Core
             return "";
         }
 
-        
-        public static void downloadDrivers()
+        public static List<DataGridEntity> getListWithDriversForDownload()
+        {
+            var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
+            return driversForDownload;
+        }
+
+        public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars)
         {
             var firstPartLink = "http://download.drp.su/driverpacks/repack";
-            var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
             Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip")));
         }
 
