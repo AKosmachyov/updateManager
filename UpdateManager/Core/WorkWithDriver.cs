@@ -88,15 +88,18 @@ namespace UpdateManager.Core
         public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars)
         {
             var firstPartLink = "http://download.drp.su/driverpacks/repack";
-            Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip")));
+            var i = 0;                            
+            Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip", progressBars[i++])));
         }
 
-        static async Task downloaderAsync(string link, string name)
+        static async Task downloaderAsync(string link, string name, ProgressBar progressBar)
         {
             try
             {
                 using (WebClient webClient = new WebClient())
                 {
+                    webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                    
                     await webClient.DownloadFileTaskAsync(new Uri(link), name);
                 }
             }
@@ -105,5 +108,11 @@ namespace UpdateManager.Core
                 throw new Exception("Ошибка скачивания");
             }
         }        
+        static void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            double bytesIn = double.Parse(e.BytesReceived.ToString());
+            double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+            var percentage = int.Parse(Math.Truncate(bytesIn / totalBytes * 100).ToString());            
+        }
     }
 }
