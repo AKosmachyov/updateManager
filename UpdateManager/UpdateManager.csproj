@@ -77,6 +77,7 @@
       <DependentUpon>DownloadWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entity\DataGridEntity.cs" />
+    <Compile Include="Entity\DownloadQueue.cs" />
     <Compile Include="Entity\Driver.cs" />
     <Compile Include="Entity\DriverUI.cs" />
     <Compile Include="Entity\InfoDrivers.cs" />
