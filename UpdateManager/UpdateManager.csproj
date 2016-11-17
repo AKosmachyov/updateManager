@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Entity\DataGridEntity.cs" />
     <Compile Include="Entity\Driver.cs" />
+    <Compile Include="Entity\DriverUI.cs" />
     <Compile Include="Entity\InfoDrivers.cs" />
     <Compile Include="Entity\Device.cs" />
     <Compile Include="Entity\OSinfo.cs" />
