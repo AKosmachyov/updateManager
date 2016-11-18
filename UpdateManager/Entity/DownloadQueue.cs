@@ -12,9 +12,9 @@ namespace UpdateManager.Entity
     class DownloadQueue
     {
         delegate void NextOperation();
-        public DownloadQueue(Queue<DriverUI> q)
+        public DownloadQueue(IEnumerable<DriverUI> el)
         {
-            _queue = q;                    
+            _queue = new Queue<DriverUI>(el);                    
         }
 
         public Queue<DriverUI> _queue;
