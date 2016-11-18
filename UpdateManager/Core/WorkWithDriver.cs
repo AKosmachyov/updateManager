@@ -85,10 +85,10 @@ namespace UpdateManager.Core
             return driversForDownload;
         }
 
-        public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars)
+        public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
         {
             var i = 0;
-            var downloadQueue = new DownloadQueue(driversForDownload.Select(x => new DriverUI(x.driver, progressBars[i++])));
+            var downloadQueue = new DownloadQueue(driversForDownload.Select(x => new DriverUI(x.driver, progressBars[i], labels[i++])));
             downloadQueue.startDownload();
         }        
     }

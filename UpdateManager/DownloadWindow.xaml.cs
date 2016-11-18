@@ -23,6 +23,7 @@ namespace UpdateManager
     {
         List<ProgressBar> progressBarsList = new List<ProgressBar>();
         List<DataGridEntity> driverList = new List<DataGridEntity>();
+        List<Label> labelList = new List<Label>();
 
         public DownloadWindow()
         {
@@ -43,23 +44,32 @@ namespace UpdateManager
                 label.Width = 381;
                 label.Content = list[i].driver.device;
 
+                var statusLabel = new Label();
+                statusLabel.Width = 150;
+                statusLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+                labelList.Add(statusLabel);
+
                 var progress = new ProgressBar();
                 progress.Height = 15;
-                progress.Width = 150;
-                Grid.SetColumn(label, 0);
-                Grid.SetColumn(progress, 1);
+                progress.Width = 150;               
                 progressBarsList.Add(progress);
 
+                Grid.SetColumn(label, 0);
                 Grid.SetRow(label, i);
+                Grid.SetColumn(statusLabel, 1);
+                Grid.SetRow(statusLabel, i);
+                Grid.SetColumn(progress, 1);                
                 Grid.SetRow(progress, i);
-                gridWithElements.Children.Add(label);
+
+                gridWithElements.Children.Add(label);              
                 gridWithElements.Children.Add(progress);
+                gridWithElements.Children.Add(statusLabel);
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WorkWithDriver.downloadDrivers(driverList, progressBarsList);
+            WorkWithDriver.downloadDrivers(driverList, progressBarsList, labelList);
         }
     }
 }
