@@ -19,22 +19,16 @@ namespace UpdateManager.Entity
 
         public Queue<DriverUI> _queue;
 
-        public void startDownload()
+        public async void startDownload()
         {
-            if(this._queue.Count > 0)
-            {
-
-                this._queue.Dequeue().downloaderAsync(next).Wait();
-            }
+            if(this._queue.Count > 0)            
+                await this._queue.Dequeue().downloaderAsync(next);            
         }
 
-        public void next(object sender, AsyncCompletedEventArgs e)
-        {
-            //object sender, DownloadDataCompletedEventArgs e
-            if (this._queue.Count > 0)
-            {
-                this._queue.Dequeue().downloaderAsync(next).Wait();
-            }
+        public async void next(object sender, AsyncCompletedEventArgs e)
+        {            
+            if (this._queue.Count > 0)            
+                await this._queue.Dequeue().downloaderAsync(next);            
         }
     }
 }
