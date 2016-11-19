@@ -79,27 +79,17 @@ namespace UpdateManager.Core
             return "";
         }
 
-        
-        public static void downloadDrivers()
+        public static List<DataGridEntity> getListWithDriversForDownload()
         {
-            var firstPartLink = "http://download.drp.su/driverpacks/repack";
             var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
-            Task.WhenAll(driversForDownload.Select(x => downloaderAsync(firstPartLink + x.driver.link, x.driver.device + ".zip")));
+            return driversForDownload;
         }
 
-        static async Task downloaderAsync(string link, string name)
+        public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
         {
-            try
-            {
-                using (WebClient webClient = new WebClient())
-                {
-                    await webClient.DownloadFileTaskAsync(new Uri(link), name);
-                }
-            }
-            catch (Exception)
-            {
-                throw new Exception("Ошибка скачивания");
-            }
+            var i = 0;
+            var downloadQueue = new DownloadQueue(driversForDownload.Select(x => new DriverUI(x.driver, progressBars[i], labels[i++])));
+            downloadQueue.startDownload();
         }        
     }
 }
