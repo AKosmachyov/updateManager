@@ -9,6 +9,7 @@ using UpdateManager.Entity;
 using System.Linq;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace UpdateManager.Core
 {
@@ -37,7 +38,7 @@ namespace UpdateManager.Core
                 if (val.drivers.Count > 0)
                 {
                     var temp = new Driver();
-                    temp.device = val.drivers[0].name;
+                    temp.deviceName = val.drivers[0].name;
                     temp.link = val.drivers[0].link;
                     var arrTime = (val.drivers[0].date).Split('-');
                     temp.date = new DateTime(Convert.ToInt32(arrTime[0]), Convert.ToInt32(arrTime[1]), Convert.ToInt32(arrTime[2]));
@@ -84,12 +85,24 @@ namespace UpdateManager.Core
             var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
             return driversForDownload;
         }
-
-        public static void downloadDrivers(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
+        public static void updateDriversFull(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
         {
+            var folderPath = String.Format(@"{0}\{1}",
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "UpdateManager");
+            if (!(File.Exists(folderPath)))
+                Directory.CreateDirectory(folderPath);
             var i = 0;
             var downloadQueue = new DownloadQueue(driversForDownload.Select(x => new DriverUI(x.driver, progressBars[i], labels[i++])));
             downloadQueue.startDownload();
-        }        
+
+            //Process installProcess = new Process();
+            //installProcess.StartInfo.UseShellExecute = true;
+            //installProcess.StartInfo.FileName = String.Format("{0}{1}", t.driver.directory, t.driver.inf);            
+            //installProcess.StartInfo.Arguments = String.Format("C:\\WINDOWS\\System32\\rundll32.exe setupapi, InstallHinfSection");
+            //installProcess.StartInfo.Verb = "Install";
+            //installProcess.Start();
+            //installProcess.WaitForExit();           
+        }
     }
 }

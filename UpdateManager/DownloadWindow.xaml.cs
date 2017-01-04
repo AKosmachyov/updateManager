@@ -42,7 +42,7 @@ namespace UpdateManager
 
                 var label = new Label();
                 label.Width = 381;
-                label.Content = list[i].driver.device;
+                label.Content = list[i].driver.deviceName;
 
                 var statusLabel = new Label();
                 statusLabel.Width = 150;
@@ -69,7 +69,7 @@ namespace UpdateManager
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WorkWithDriver.downloadDrivers(driverList, progressBarsList, labelList);
+            WorkWithDriver.updateDriversFull(driverList, progressBarsList, labelList);
         }
     }
 }

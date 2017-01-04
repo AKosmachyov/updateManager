@@ -29,7 +29,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Драйвера" Binding="{Binding driver.device}" Width="*" CanUserSort="False" IsReadOnly="True">
+                <DataGridTextColumn Header="Драйвера" Binding="{Binding driver.deviceName}" Width="*" CanUserSort="False" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="VerticalAlignment" Value="Center" />

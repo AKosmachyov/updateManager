@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -24,15 +25,23 @@ namespace UpdateManager.Entity
         Label _label;
         public async Task downloaderAsync(Action<object, AsyncCompletedEventArgs> next)
         {
+            var folderPath = String.Format(@"{0}\UpdateManager", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));         
+            if (File.Exists(String.Format(@"{0}\{1}.zip", folderPath, _driver.deviceName)))
+            {
+                _label.Content = "100%";
+                _progress.Value = 100;
+                next(null, null);
+                return;                
+            }
             var link = String.Format("http://download.drp.su/driverpacks/repack{0}", _driver.link);
-            var name = String.Format("{0}.zip", _driver.device);
+            var filePath = String.Format(@"{0}\{1}.zip", folderPath, _driver.deviceName);
             try
                 {
                     using (_downloader = new WebClient())
                     {
                         _downloader.DownloadProgressChanged += new DownloadProgressChangedEventHandler(progressChanged);                        
                         _downloader.DownloadFileCompleted += new AsyncCompletedEventHandler(next);
-                        await _downloader.DownloadFileTaskAsync(new Uri(link), name);
+                        await _downloader.DownloadFileTaskAsync(new Uri(link), filePath);
                     }
                 }
                 catch (Exception)

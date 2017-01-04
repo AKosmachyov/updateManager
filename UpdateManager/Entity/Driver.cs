@@ -4,7 +4,7 @@ namespace UpdateManager.Entity
 {
     public class Driver
     {
-        public string device { get; set; }
+        public string deviceName { get; set; }
         public string version { get; set; }
         public string link { get; set; }
         public DateTime date { get; set; }
