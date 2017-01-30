@@ -85,7 +85,7 @@ namespace UpdateManager.Core
             var driversForDownload = dataGridEntity.Where(x => x.isCheck == true).ToList();
             return driversForDownload;
         }
-        public static void updateDriversFull(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
+        public static async void updateDriversFull(List<DataGridEntity> driversForDownload, List<ProgressBar> progressBars, List<Label> labels)
         {
             var folderPath = String.Format(@"{0}\{1}",
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -94,15 +94,9 @@ namespace UpdateManager.Core
                 Directory.CreateDirectory(folderPath);
             var i = 0;
             var downloadQueue = new DownloadQueue(driversForDownload.Select(x => new DriverUI(x.driver, progressBars[i], labels[i++])));
-            downloadQueue.startDownload();
-
-            //Process installProcess = new Process();
-            //installProcess.StartInfo.UseShellExecute = true;
-            //installProcess.StartInfo.FileName = String.Format("{0}{1}", t.driver.directory, t.driver.inf);            
-            //installProcess.StartInfo.Arguments = String.Format("C:\\WINDOWS\\System32\\rundll32.exe setupapi, InstallHinfSection");
-            //installProcess.StartInfo.Verb = "Install";
-            //installProcess.Start();
-            //installProcess.WaitForExit();           
+            await Task.Run(() => downloadQueue.startDownload());
+            //await Task.Run(() => downloadQueue.startInstall());
+          
         }
     }
 }
